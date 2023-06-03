@@ -40,13 +40,13 @@ class _VentasPageState extends State<VentasPage> {
                     children: [
                       Text('Data : ${data['data']}'),
                       Text('Hora : ${data['hora']}'),
-                      Text('Vendedor : ${data['vendedor']}'),
+                      Text('Vendedor  : ${data['vendedor']}'),
                       Text('Pagamento : ${data['pagamento']}'),
                     ],
                   ),
                   // leading: Text('${data['quantidade']}'),
                   trailing: Text('Rs ${data['total'].toStringAsFixed(2)}'),
-                  onLongPress: () {
+                  onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => DetailsOfSales(
@@ -55,6 +55,9 @@ class _VentasPageState extends State<VentasPage> {
                         ),
                       ),
                     );
+                  },
+                  onLongPress: () {
+                    
                   },
                   isThreeLine: true,
                 ),
