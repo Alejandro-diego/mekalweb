@@ -56,9 +56,7 @@ class _VentasPageState extends State<VentasPage> {
                       ),
                     );
                   },
-                  onLongPress: () {
-                    
-                  },
+                  onLongPress: () {},
                   isThreeLine: true,
                 ),
               );
