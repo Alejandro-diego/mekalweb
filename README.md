@@ -1,6 +1,6 @@
 # mekalweb
 
-A new Flutter project.
+MekalStockWeb
 
 ## Getting Started
 
