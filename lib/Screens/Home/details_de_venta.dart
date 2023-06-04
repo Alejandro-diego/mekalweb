@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class DetailsOfSales extends StatefulWidget {
-  DetailsOfSales({Key? key, required this.cliente, required this.reference})
+  DetailsOfSales(
+      {Key? key,
+      required this.cliente,
+      required this.reference,
+      required this.total})
       : super(key: key);
   String reference;
   String cliente;
+  String total;
   @override
   State<DetailsOfSales> createState() => _DetailsOfSalesState();
 }
@@ -62,6 +67,21 @@ class _DetailsOfSalesState extends State<DetailsOfSales> {
               },
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                'Total : ${widget.total} ',
+                style: const TextStyle(fontWeight: FontWeight.w900),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Voltar'),
+              ),
+            ],
+          )
         ],
       ),
     );

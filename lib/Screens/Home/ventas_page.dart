@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mekalweb/Screens/Home/qrcode_page.dart';
+import 'package:pix_flutter/pix_flutter.dart';
 
 import 'details_de_venta.dart';
 
@@ -11,6 +13,8 @@ class VentasPage extends StatefulWidget {
 }
 
 class _VentasPageState extends State<VentasPage> {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +35,11 @@ class _VentasPageState extends State<VentasPage> {
                 snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-
+          
               return Card(
                 child: ListTile(
+                  dense: true,
+                  visualDensity: const VisualDensity(vertical: 3),
                   title: Text('Cliente : ${data['cliente']}'),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,24 +51,63 @@ class _VentasPageState extends State<VentasPage> {
                     ],
                   ),
                   // leading: Text('${data['quantidade']}'),
-                  trailing: Text('Rs ${data['total'].toStringAsFixed(2)}'),
+                  trailing: Column(
+                    children: <Widget> [
+                      Text('Rs ${data['total'].toStringAsFixed(2)}'),
+                      Hero(
+                        tag:data['reference'],
+                        child: IconButton(
+                          onPressed: () {
+                            mandarPix(data['total'].toStringAsFixed(2) , data['reference']);
+                          },
+                          icon: const Icon(Icons.qr_code_2),
+                        ),
+                      ),
+                    ],
+                  ),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => DetailsOfSales(
                           cliente: data['cliente'],
-                          reference: data['reference'],
+                          reference: data['reference'], total: data['total'].toStringAsFixed(2),
                         ),
                       ),
                     );
                   },
-                  onLongPress: () {},
+                  onLongPress: () {
+                    _db
+                        .collection('orçamentos')
+                        .doc(data['reference'])
+                        .delete();
+                  },
                   isThreeLine: true,
                 ),
               );
             }).toList(),
           );
         },
+      ),
+    );
+  }
+
+  void mandarPix(String valor , String tag) async {
+    PixFlutter pixFlutter = PixFlutter(
+        payload: Payload(
+            pixKey: 'alejandro.maxcom@gmail.com',
+            // A descrição está desativada por um erro no próprio API Pix, que não deixa processar pagamentos se ela estiver presente.
+            // Assim que o bug for consertado, a funcionalidade será adicionada de volta.
+            description: 'Mekal',
+            merchantName: 'MERCHANT_NAME',
+            merchantCity: 'IBIRUBA',
+            txid: 'TXID', // Até 25 caracteres para o QR Code estático
+            amount: valor));
+
+    debugPrint(tag);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) =>  QrCodePage(code: pixFlutter.getQRCode(), tag: tag,),
       ),
     );
   }
