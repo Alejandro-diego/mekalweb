@@ -94,7 +94,7 @@ class _VentasPageState extends State<VentasPage> {
   void mandarPix(String valor , String tag) async {
     PixFlutter pixFlutter = PixFlutter(
         payload: Payload(
-            pixKey: 'alejandro.maxcom@gmail.com',
+            pixKey: '09473073000175',
             // A descrição está desativada por um erro no próprio API Pix, que não deixa processar pagamentos se ela estiver presente.
             // Assim que o bug for consertado, a funcionalidade será adicionada de volta.
             description: 'Mekal',
