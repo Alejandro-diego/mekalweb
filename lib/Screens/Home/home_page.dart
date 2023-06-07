@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mekalweb/Screens/Home/ventas_page.dart';
 
+import '../caragar_produto.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -26,6 +28,18 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const VentasPage(),
+                  ),
+                );
+              },
+            ),
+            const Spacer(),
+
+              ElevatedButton(
+              child: const Text('Adisionar Produto'),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const  CargarProduto(),
                   ),
                 );
               },
