@@ -59,18 +59,22 @@ class _ListProductState extends State<ListProduct> {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
 
-              return ListTile(
-                isThreeLine: true,
-                title: Text(data['description']),
-                subtitle: Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Produto n° :${data['produto']}'),
-                    Text('BarCode n° :${data['barCode']}'),
-                  ],
+              return Card(
+                child: ListTile(
+                  isThreeLine: true,
+                  title: Text(data['description']),
+                  subtitle: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Produto n° :${data['produto']}'),
+                      Text('BarCode n° :${data['barCode']}'),
+                      Text('Estoque    :${data['stock']}'),
+                    ],
+                  ),
+                  trailing:  Text('R\$: ${data['preco']}'),
+                  
+                
                 ),
-                trailing:const  Text('R\$ null'),
-              
               );
             }).toList(),
           );
