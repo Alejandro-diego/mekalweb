@@ -10,13 +10,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-        apiKey: "AIzaSyAhDRUVwjQBtImMj5FVsklc21Yw4Ws-MVs",
-        authDomain: "mekal-53bcb.firebaseapp.com",
-        projectId: "mekal-53bcb",
-        storageBucket: "mekal-53bcb.appspot.com",
-        messagingSenderId: "993607714963",
-        appId: "1:993607714963:web:d693d6b41857e98733a566",
-        measurementId: "G-Z6GD8NQM3B"),
+        apiKey: "AIzaSyAwsAc5Xt_KHfSU_XJ93zrfEm5N5BKyZhI",
+        authDomain: "mekal-2c670.firebaseapp.com",
+        projectId: "mekal-2c670",
+        storageBucket: "mekal-2c670.appspot.com",
+        messagingSenderId: "145475469623",
+        appId: "1:145475469623:web:bb839fe7f5bf217110dab2",
+        measurementId: "G-GVNNKRX422"),
   );
   // await Firebase.initializeApp();
   runApp(const MyApp());
