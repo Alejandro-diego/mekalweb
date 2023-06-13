@@ -229,7 +229,7 @@ class _CargarProdutoState extends State<CargarProduto> {
               ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _db.collection('produc').doc(barCode.text).set({
+                      _db.collection('produto').doc(produto.text).set({
                         'description': descripcion.text.toUpperCase(),
                         'produto': int.parse(produto.text),
                         'barCode': barCode.text,

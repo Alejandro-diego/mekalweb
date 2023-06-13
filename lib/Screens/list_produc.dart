@@ -2,17 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 
-
-
 class ListProduct extends StatefulWidget {
- const  ListProduct({Key? key, })
-      : super(key: key);
- 
+  const ListProduct({
+    Key? key,
+  }) : super(key: key);
+
   @override
   State<ListProduct> createState() => _ListProductState();
 }
 
 class _ListProductState extends State<ListProduct> {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   late bool find = false;
   final _searchController = TextEditingController();
 
@@ -64,16 +65,23 @@ class _ListProductState extends State<ListProduct> {
                   isThreeLine: true,
                   title: Text(data['description']),
                   subtitle: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Produto n° :${data['produto']}'),
                       Text('BarCode n° :${data['barCode']}'),
                       Text('Estoque    :${data['stock']}'),
                     ],
                   ),
-                  trailing:  Text('R\$: ${data['preco']}'),
-                  
-                
+                  trailing: Text('R\$: ${data['preco']}'),
+                  onLongPress: () {
+                   
+                    
+                    _db
+                        .collection('produto')
+                        .doc(data['produto'].toString())
+                        .delete();
+                    debugPrint(data['produto'].toString());
+                  },
                 ),
               );
             }).toList(),
