@@ -35,7 +35,7 @@ class _VentasPageState extends State<VentasPage> {
                 snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-          
+
               return Card(
                 child: ListTile(
                   dense: true,
@@ -52,13 +52,14 @@ class _VentasPageState extends State<VentasPage> {
                   ),
                   // leading: Text('${data['quantidade']}'),
                   trailing: Column(
-                    children: <Widget> [
+                    children: <Widget>[
                       Text('Rs ${data['total'].toStringAsFixed(2)}'),
                       Hero(
-                        tag:data['reference'],
+                        tag: data['reference'],
                         child: IconButton(
                           onPressed: () {
-                            mandarPix(data['total'].toStringAsFixed(2) , data['reference']);
+                            mandarPix(data['total'].toStringAsFixed(2),
+                                data['reference']);
                           },
                           icon: const Icon(Icons.qr_code_2),
                         ),
@@ -70,12 +71,15 @@ class _VentasPageState extends State<VentasPage> {
                       MaterialPageRoute(
                         builder: (context) => DetailsOfSales(
                           cliente: data['cliente'],
-                          reference: data['reference'], total: data['total'].toStringAsFixed(2),
+                          reference: data['reference'],
+                          total: data['total'].toStringAsFixed(2),
                         ),
                       ),
                     );
                   },
                   onLongPress: () {
+                    debugPrint(data['reference']);
+                    deleteAllTaskDocs(data['reference']);
                     _db
                         .collection('orçamentos')
                         .doc(data['reference'])
@@ -91,7 +95,20 @@ class _VentasPageState extends State<VentasPage> {
     );
   }
 
-  void mandarPix(String valor , String tag) async {
+  Future<void> deleteAllTaskDocs(String ref) {
+    return _db
+        .collection('orçamentos')
+        .doc(ref)
+        .collection('itens')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        doc.reference.delete();
+      }
+    });
+  }
+
+  void mandarPix(String valor, String tag) async {
     PixFlutter pixFlutter = PixFlutter(
         payload: Payload(
             pixKey: '09473073000175',
@@ -107,7 +124,10 @@ class _VentasPageState extends State<VentasPage> {
 
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) =>  QrCodePage(code: pixFlutter.getQRCode(), tag: tag,),
+        builder: (context) => QrCodePage(
+          code: pixFlutter.getQRCode(),
+          tag: tag,
+        ),
       ),
     );
   }

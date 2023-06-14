@@ -30,15 +30,7 @@ class _ListProductState extends State<ListProduct> {
           onChanged: (value) => setState(() {}),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.blue,
-          child: const Icon(
-            Icons.shopping_cart_outlined,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          }),
+     
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('produto')
@@ -60,28 +52,31 @@ class _ListProductState extends State<ListProduct> {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
 
-              return Card(
-                child: ListTile(
-                  isThreeLine: true,
-                  title: Text(data['description']),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Produto n° :${data['produto']}'),
-                      Text('BarCode n° :${data['barCode']}'),
-                      Text('Estoque    :${data['stock']}'),
-                    ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  child: ListTile(
+                    isThreeLine: true,
+                    title: Text(data['description']),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Produto n° :${data['produto']}'),
+                        Text('BarCode n° :${data['barCode']}'),
+                        Text('Estoque    :${data['stock']}'),
+                      ],
+                    ),
+                    trailing: Text('R\$: ${data['preco']}'),
+                    onLongPress: () {
+                     
+                      
+                      _db
+                          .collection('produto')
+                          .doc(data['produto'].toString())
+                          .delete();
+                      debugPrint(data['produto'].toString());
+                    },
                   ),
-                  trailing: Text('R\$: ${data['preco']}'),
-                  onLongPress: () {
-                   
-                    
-                    _db
-                        .collection('produto')
-                        .doc(data['produto'].toString())
-                        .delete();
-                    debugPrint(data['produto'].toString());
-                  },
                 ),
               );
             }).toList(),
@@ -90,4 +85,8 @@ class _ListProductState extends State<ListProduct> {
       ),
     );
   }
+  
+
+
+
 }
