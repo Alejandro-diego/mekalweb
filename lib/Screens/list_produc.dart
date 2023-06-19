@@ -33,7 +33,7 @@ class _ListProductState extends State<ListProduct> {
      
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('produto')
+            .collection('produtos')
             // .where('produc' ,arrayContainsAny: ['CERA'])
             .orderBy('description', descending: find)
             .startAt([_searchController.text.toUpperCase()]).endAt(
@@ -71,7 +71,7 @@ class _ListProductState extends State<ListProduct> {
                      
                       
                       _db
-                          .collection('produto')
+                          .collection('produtos')
                           .doc(data['produto'].toString())
                           .delete();
                       debugPrint(data['produto'].toString());
