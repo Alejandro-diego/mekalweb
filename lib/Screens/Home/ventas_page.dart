@@ -84,6 +84,8 @@ class _VentasPageState extends State<VentasPage> {
                         .collection('orçamentos')
                         .doc(data['reference'])
                         .delete();
+
+                    _db.collection('pedidos').doc(data['reference']).delete();
                   },
                   isThreeLine: true,
                 ),
