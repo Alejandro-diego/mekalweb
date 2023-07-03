@@ -44,10 +44,12 @@ class _VentasPageState extends State<VentasPage> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Data : ${data['data']}'),
-                      Text('Hora : ${data['hora']}'),
+                      Text('Data : ${data['data']} ,Hora : ${data['hora']}'),                     
                       Text('Vendedor  : ${data['vendedor']}'),
                       Text('Pagamento : ${data['pagamento']}'),
+                      data['integrado']
+                      ? const  Text('Integrado', style: TextStyle(color: Colors.green),)
+                      : const Text('No Integrado', style: TextStyle(color: Colors.red),)
                     ],
                   ),
                   // leading: Text('${data['quantidade']}'),
@@ -64,6 +66,7 @@ class _VentasPageState extends State<VentasPage> {
                           icon: const Icon(Icons.qr_code_2),
                         ),
                       ),
+                   
                     ],
                   ),
                   onTap: () {
